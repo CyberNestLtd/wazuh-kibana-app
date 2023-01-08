@@ -33,6 +33,7 @@ import 'brace/ext/language_tools';
 import "brace/ext/searchbox";
 import _ from 'lodash';
 import { webDocumentationLink } from '../../../../../common/services/web_documentation';
+import { i18n } from "@kbn/i18n";
 
 export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalUsers, currentPlatform,onFormChange }) => {
   const [logicalOperator, setLogicalOperator] = useState('OR');
@@ -97,7 +98,7 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
     setIsLogicalPopoverOpen(isLogicalPopoverOpen => !isLogicalPopoverOpen);
   const closeLogicalPopover = () => setIsLogicalPopoverOpen(false);
 
-  const selectOperator = op => {  
+  const selectOperator = op => {
     setLogicalOperator(op);
     closeLogicalPopover();
   };
@@ -125,7 +126,7 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
     rulesTmp.splice(id, 1);
     setRules(rulesTmp);
   };
-  
+
   const getRulesFromJson = (jsonRule) => {
     if (jsonRule !== '{}' && jsonRule !== '') {
       // empty json is valid
@@ -217,9 +218,9 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
     setRules(rulesTmp);
   };
 
-  const openJsonEditor = () => {  
+  const openJsonEditor = () => {
     const ruleObject = getJsonFromRule(internalUserRules, rules, logicalOperator);
-    
+
     setRuleJson(JSON.stringify(ruleObject, undefined, 2));
     setIsJsonEditor(true);
   };
@@ -241,15 +242,20 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
             color="primary"
             isDisabled={hasWrongFormat}
             onClick={() => openVisualEditor()}
-          >
-            Switch to visual editor
+          >{ i18n.translate("wazuh.components.overview.rule.switch", {
+              defaultMessage: "Switch to visual editor",
+            })}
           </EuiButtonEmpty>
         </EuiToolTip>
       );
     } else {
       return (
         <EuiButtonEmpty color="primary" onClick={() => openVisualEditor()}>
-          Switch to visual editor
+          {
+            i18n.translate("wazuh.components.overview.rule.visual", {
+              defaultMessage: "Switch to visual editor",
+            })
+          }
         </EuiButtonEmpty>
       );
     }
@@ -258,7 +264,7 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
   const saveRule = () => {
     if (isJsonEditor) {
       // if json editor is empty
-      if (ruleJson === '') {       
+      if (ruleJson === '') {
         setRuleJson('{}');
       }
       save(JSON.parse(ruleJson));
@@ -292,18 +298,32 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
     <>
       <EuiPanel>
         <EuiTitle>
-          <h1>Mapping rules</h1>
+          <h1>{
+              i18n.translate("wazuh.components.overview.mitre.Mappingrules", {
+                defaultMessage: "Mapping rules",
+              })
+            }
+          </h1>
         </EuiTitle>
         <EuiFlexGroup>
           <EuiFlexItem>
             <EuiText>
-              <span>Assign roles to users who match these rules. </span>
+              <span>{
+                i18n.translate("wazuh.components.overview.mitre.assign", {
+                  defaultMessage: "Assign roles to users who match these rules.",
+                })}
+              </span>
               <EuiLink
                 href={webDocumentationLink('user-manual/api/rbac/auth-context.html')}
                 external
                 target="_blank"
               >
-                Learn more
+                {
+                  i18n.translate("wazuh.components.overview.mapint.Learnmore", {
+                    defaultMessage: "Learn more",
+                  })
+                }
+
               </EuiLink>
             </EuiText>
           </EuiFlexItem>
@@ -326,7 +346,11 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
               )) || (
                   <Fragment>
                     <EuiTitle size="s">
-                      <h2>Map internal users</h2>
+                      <h2>{
+                        i18n.translate("wazuh.components.overview.mapint", {
+                          defaultMessage: "Map internal users",
+                        })}
+                      </h2>
                     </EuiTitle>
                     <EuiFormRow
                       label="Internal users"
@@ -344,7 +368,11 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
                     </EuiFormRow>
                     <EuiSpacer />
                     <EuiTitle size="s">
-                      <h2>Custom rules</h2>
+                      <h2>{
+                        i18n.translate("wazuh.components.overview.mitre.Customrules", {
+                          defaultMessage: "Custom rules",
+                        })}
+                      </h2>
                     </EuiTitle>
                     <EuiPopover
                       ownFocus
@@ -370,7 +398,10 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
                               color="text"
                               onClick={() => selectOperator('AND')}
                             >
-                              {logicalOperator === 'AND' && <EuiIcon type="check" />}All are true
+                              {logicalOperator === 'AND' && <EuiIcon type="check" />}{
+                              i18n.translate("wazuh.components.overview.allTrue", {
+                                defaultMessage: "All are true",
+                              })}
                           </EuiButtonEmpty>
                           </EuiFlexItem>
                         </EuiFlexGroup>
@@ -381,7 +412,10 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
                               color="text"
                               onClick={() => selectOperator('OR')}
                             >
-                              {logicalOperator === 'OR' && <EuiIcon type="check" />}Any are true
+                              {logicalOperator === 'OR' && <EuiIcon type="check" />}{
+                                i18n.translate("wazuh.components.overview.anytrue", {
+                                  defaultMessage: "Any are true",
+                                })}
                           </EuiButtonEmpty>
                           </EuiFlexItem>
                         </EuiFlexGroup>
@@ -394,7 +428,10 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
                       color="primary"
                       onClick={() => addNewRule()}
                     >
-                      Add new rule
+                      {
+                      i18n.translate("wazuh.components.overview.mitre.Emptyfield", {
+                        defaultMessage: "Empty field",
+                      })}
                   </EuiButtonEmpty>
                   </Fragment>
                 )}
@@ -405,7 +442,10 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
           <EuiFlexItem grow={false}>
             {(isJsonEditor && getSwitchVisualButton()) || (
               <EuiButtonEmpty color="primary" onClick={() => openJsonEditor()}>
-                Switch to JSON editor
+               {
+                i18n.translate("wazuh.components.overview.mitre.Joson", {
+                  defaultMessage: "Switch to JSON editor",
+                })}
               </EuiButtonEmpty>
             )}
           </EuiFlexItem>
@@ -415,7 +455,10 @@ export const RuleEditor = ({ save, initialRule, isLoading, isReserved, internalU
         <EuiFlexItem></EuiFlexItem>
         <EuiFlexItem grow={false}>
           <EuiButton disabled={isReserved} isLoading={isLoading} fill onClick={() => saveRule()}>
-            Save role mapping
+            {
+              i18n.translate("wazuh.components.overview.mitre.savemap", {
+                defaultMessage: "Save role mapping",
+              })}
           </EuiButton>
         </EuiFlexItem>
       </EuiFlexGroup>

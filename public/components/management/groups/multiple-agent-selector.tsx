@@ -37,6 +37,7 @@ import { UI_LOGGER_LEVELS } from '../../../../common/constants';
 import { UI_ERROR_SEVERITIES } from '../../../react-services/error-orchestrator/types';
 import { getErrorOrchestrator } from '../../../react-services/common-services';
 import { Logtest } from '../../../directives/wz-logtest/components/logtest';
+import { i18n } from '@kbn/i18n';
 
 export const MultipleAgentSelector = withErrorBoundary(
   class MultipleAgentSelector extends Component {
@@ -516,7 +517,10 @@ export const MultipleAgentSelector = withErrorBoundary(
                             </EuiFlexItem>
                             <EuiFlexItem grow={false}>
                               <EuiTitle size="m">
-                                <h1>Manage agents of group {this.props.currentGroup.name}</h1>
+                                <h1>{
+                                  i18n.translate("wazuh.components.manage.group.agentsGroup", {
+                                    defaultMessage: "Manage agents of group",
+                                  })} {this.props.currentGroup.name}</h1>
                               </EuiTitle>
                             </EuiFlexItem>
                           </EuiFlexGroup>
@@ -532,15 +536,20 @@ export const MultipleAgentSelector = withErrorBoundary(
                                 this.state.initState ||
                                 (this.state.currentDeleting === 0 && this.state.currentAdding === 0)
                               }
-                            >
-                              Apply changes
+                            >{
+                              i18n.translate("wazuh.components.manage.group.agentsGroupApply", {
+                                defaultMessage: "Apply changes",
+                              })}
+
                             </EuiButton>
                           )}
                           {this.state.moreThan500 && (
                             <span className="error-msg">
                               <i className="fa fa-exclamation-triangle"></i>
-                              &nbsp;Changes cannot be applied with more than 500 additions or
-                              removals
+                              &nbsp;{
+                                i18n.translate("wazuh.components.manage.group.agentsGroupRemoval", {
+                                  defaultMessage: "Changes cannot be applied with more than 500 additions or removals",
+                                })}
                             </span>
                           )}
                         </EuiFlexItem>
@@ -553,7 +562,11 @@ export const MultipleAgentSelector = withErrorBoundary(
                                 <EuiFlexGroup>
                                   <EuiFlexItem>
                                     <EuiTitle size="s">
-                                      <h4>Available agents</h4>
+                                      <h4>{
+                                        i18n.translate("wazuh.components.manage.group.availableAgents", {
+                                          defaultMessage: "Available agents",
+                                        })}
+                                      </h4>
                                     </EuiTitle>
                                   </EuiFlexItem>
                                   <EuiFlexItem grow={false}>
@@ -644,8 +657,10 @@ export const MultipleAgentSelector = withErrorBoundary(
                                         }}
                                       >
                                         {' '}
-                                        <EuiIcon type="refresh" /> &nbsp; Click here to load more
-                                        agents
+                                        <EuiIcon type="refresh" /> &nbsp; {
+                                          i18n.translate("wazuh.components.manage.group.more", {
+                                            defaultMessage: "Click here to load more agent ",
+                                          })}
                                       </p>
                                     </>
                                   )) ||
@@ -654,7 +669,10 @@ export const MultipleAgentSelector = withErrorBoundary(
                                       <EuiSpacer size="m" />
                                       <p className="wz-load-extra">
                                         {' '}
-                                        <EuiLoadingSpinner size="m" /> &nbsp; Loading...
+                                        <EuiLoadingSpinner size="m" /> &nbsp; {
+                                          i18n.translate("wazuh.components.manage.group.more.load", {
+                                            defaultMessage: "Loading...",
+                                          })}
                                       </p>
                                     </>
                                   ))}
@@ -755,8 +773,11 @@ export const MultipleAgentSelector = withErrorBoundary(
                                 <EuiFlexGroup>
                                   <EuiFlexItem>
                                     <EuiTitle size="s">
-                                      <h4>
-                                        Current agents in the group (
+                                      <h4>{
+                                        i18n.translate("wazuh.components.manage.group.more.group", {
+                                          defaultMessage: "Current agents in the group",
+                                        })}
+                                         (
                                         {this.state.totalSelectedAgents})
                                       </h4>
                                     </EuiTitle>
