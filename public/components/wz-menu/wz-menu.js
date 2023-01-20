@@ -55,16 +55,118 @@ import { getErrorOrchestrator } from '../../react-services/common-services';
 import { getThemeAssetURL, getAssetURL } from '../../utils/assets';
 import { AgentStatus } from '../agents/agent_status';
 import { i18n } from '@kbn/i18n';
+const overview = i18n.translate('wazuh.public.components.wz.menu.overview', {
+  defaultMessage: 'overview',
+});
+const manager = i18n.translate('wazuh.public.components.wz.menu.manager', {
+  defaultMessage: 'manager',
+});
+const agentsPreview = i18n.translate(
+  'wazuh.public.components.wz.menu.agentsPreview',
+  {
+    defaultMessage: 'agents-preview',
+  },
+);
+const setting = i18n.translate('wazuh.public.components.wz.menu.settings', {
+  defaultMessage: 'settings',
+});
+const wazuhDev = i18n.translate('wazuh.public.components.wz.menu.wazuhDev', {
+  defaultMessage: 'wazuh-dev',
+});
+const healthCheck = i18n.translate(
+  'wazuh.public.components.wz.menu.healthCheck',
+  {
+    defaultMessage: 'health-check',
+  },
+);
+const security = i18n.translate('wazuh.public.components.wz.menu.security', {
+  defaultMessage: 'security',
+});
+const componentDidMount = i18n.translate(
+  'wazuh.public.components.wz.menu.componentDidMount',
+  {
+    defaultMessage: '.componentDidMount',
+  },
+);
+const changePattern = i18n.translate(
+  'wazuh.public.components.wz.menu.changePattern',
+  {
+    defaultMessage: '.changePattern',
+  },
+);
+const selectIndexPattern = i18n.translate(
+  'wazuh.public.components.wz.menu.selectIndexPattern',
+  {
+    defaultMessage: 'Selected index pattern',
+  },
+);
+const indexPatternSelector = i18n.translate(
+  'wazuh.public.components.wz.menu.indexPatternSelector',
+  {
+    defaultMessage: 'Index pattern selector',
+  },
+);
+const selectedAPI = i18n.translate(
+  'wazuh.public.components.wz.menu.selectedAPI',
+  {
+    defaultMessage: 'Selected API',
+  },
+);
+const selectorAPI = i18n.translate(
+  'wazuh.public.components.wz.menu.selectorAPI',
+  {
+    defaultMessage: 'API selector',
+  },
+);
+const wazuhRecovered = i18n.translate('wazuh.public.components.wz.menu.', {
+  defaultMessage: 'Wazuh could not be recovered.',
+});
+const wzMenuActive = i18n.translate(
+  'wazuh.public.components.wz.menu.wzMenuActive',
+  {
+    defaultMessage: 'wz-menu-active',
+  },
+);
+const open11 = i18n.translate('wazuh.public.components.wz.menu.open', {
+  defaultMessage: 'Open',
+});
+const summary = i18n.translate('wazuh.public.components.wz.menu.summary', {
+  defaultMessage: 'summary',
+});
+const changeSelectedAgent = i18n.translate(
+  'wazuh.public.components.wz.menu.changeSelectedAgent',
+  {
+    defaultMessage: 'Change selected agent',
+  },
+);
+const unpinAgent = i18n.translate(
+  'wazuh.public.components.wz.menu.unpinAgent',
+  {
+    defaultMessage: 'Unpin agent',
+  },
+);
+const showSelector = i18n.translate(
+  'wazuh.public.components.wz.menu.showSelector',
+  {
+    defaultMessage: 'Show selectors',
+  },
+);
+const openSelector = i18n.translate(
+  'wazuh.public.controllers.setting.openSelector',
+  {
+    defaultMessage: 'Open selectors',
+  },
+);
 
 const sections = {
-  overview: 'overview',
-  manager: 'manager',
-  'agents-preview': 'agents-preview',
-  agents: 'agents-preview',
-  settings: 'settings',
-  'wazuh-dev': 'wazuh-dev',
-  'health-check': 'health-check',
-  security: 'security',
+  overview: overview,
+  manager: manager,
+  agentsPreview: agentsPreview,
+  agents: agentsPreview,
+  settings: setting,
+  wazuhDev: wazuhDev,
+  healthCheck: healthCheck,
+  security: security,
 };
 
 export const WzMenu = withWindowSize(
@@ -114,7 +216,7 @@ export const WzMenu = withWindowSize(
         }
       } catch (error) {
         const options = {
-          context: `${WzMenu.name}.componentDidMount`,
+          context: `${WzMenu.name}${componentDidMount}`,
           level: UI_LOGGER_LEVELS.ERROR,
           severity: UI_ERROR_SEVERITIES.CRITICAL,
           store: true,
@@ -334,7 +436,12 @@ export const WzMenu = withWindowSize(
           error: {
             error: error,
             message: error.message || error,
-            title: `Error changing the Index Pattern`,
+            title: i18n.translate(
+              'wazuh.public.components.wz.menu.management.errorMsg1',
+              {
+                defaultMessage: 'Error changing the Index Pattern',
+              },
+            ),
           },
         };
         getErrorOrchestrator().handleError(options);
@@ -392,13 +499,18 @@ export const WzMenu = withWindowSize(
         }
       } catch (error) {
         const options = {
-          context: `${WzMenu.name}.changePattern`,
+          context: `${WzMenu.name}${changePattern}`,
           level: UI_LOGGER_LEVELS.ERROR,
           severity: UI_ERROR_SEVERITIES.BUSINESS,
           error: {
             error: error,
             message: error.message || error,
-            title: `Error changing the selected API`,
+            title: i18n.translate(
+              'wazuh.public.components.wz.menu.management.changingTitle',
+              {
+                defaultMessage: 'Error changing the selected API',
+              },
+            ),
           },
         };
         getErrorOrchestrator().handleError(options);
@@ -407,7 +519,7 @@ export const WzMenu = withWindowSize(
 
     buildPatternSelector() {
       return (
-        <EuiFormRow label='Selected index pattern'>
+        <EuiFormRow label={selectIndexPattern}>
           <EuiSelect
             id='selectIndexPattern'
             options={this.state.patternList.map(item => {
@@ -415,7 +527,7 @@ export const WzMenu = withWindowSize(
             })}
             value={this.state.currentSelectedPattern}
             onChange={this.changePattern}
-            aria-label='Index pattern selector'
+            aria-label={indexPatternSelector}
           />
         </EuiFormRow>
       );
@@ -423,7 +535,7 @@ export const WzMenu = withWindowSize(
 
     buildApiSelector() {
       return (
-        <EuiFormRow label='Selected API'>
+        <EuiFormRow label={selectedAPI}>
           <EuiSelect
             id='selectAPI'
             options={this.state.APIlist.map(item => {
@@ -431,7 +543,7 @@ export const WzMenu = withWindowSize(
             })}
             value={this.state.currentAPI}
             onChange={this.changeAPI}
-            aria-label='API selector'
+            aria-label={selectorAPI}
           />
         </EuiFormRow>
       );
@@ -458,8 +570,7 @@ export const WzMenu = withWindowSize(
                   </p>
                 </EuiFlexItem>
               )}
-            {this.props.state.wazuhNotReadyYet ===
-              'Wazuh could not be recovered.' && (
+            {this.props.state.wazuhNotReadyYet === { wazuhRecovered } && (
               <EuiFlexItem grow={false}>
                 <EuiButtonEmpty
                   grow={false}
@@ -469,7 +580,7 @@ export const WzMenu = withWindowSize(
                   <span>
                     {i18n.translate('wazuh.components.wz.menu.Reload', {
                       defaultMessage: ' Reload',
-                    })}{' '}
+                    })}
                   </span>
                 </EuiButtonEmpty>
               </EuiFlexItem>
@@ -489,7 +600,7 @@ export const WzMenu = withWindowSize(
         this.setState(() => {
           return {
             isToolsPopoverOpen: true,
-            currentMenuTab: 'wazuh-dev',
+            currentMenuTab: wazuhDev,
             isOverviewPopoverOpen: false,
             isManagementPopoverOpen: false,
             isSecurityPopoverOpen: false,
@@ -505,7 +616,7 @@ export const WzMenu = withWindowSize(
         this.setState(() => {
           return {
             isSettingsPopoverOpen: true,
-            currentMenuTab: 'settings',
+            currentMenuTab: setting,
             isOverviewPopoverOpen: false,
             isManagementPopoverOpen: false,
             isSecurityPopoverOpen: false,
@@ -521,7 +632,7 @@ export const WzMenu = withWindowSize(
         this.setState(() => {
           return {
             isSecurityPopoverOpen: true,
-            currentMenuTab: 'security',
+            currentMenuTab: security,
             isOverviewPopoverOpen: false,
             isManagementPopoverOpen: false,
             isSettingsPopoverOpen: false,
@@ -537,7 +648,7 @@ export const WzMenu = withWindowSize(
         this.setState(() => {
           return {
             isManagementPopoverOpen: true,
-            currentMenuTab: 'manager',
+            currentMenuTab: manager,
             isOverviewPopoverOpen: false,
             isSettingsPopoverOpen: false,
             isSecurityPopoverOpen: false,
@@ -553,7 +664,7 @@ export const WzMenu = withWindowSize(
         this.setState(state => {
           return {
             isOverviewPopoverOpen: true,
-            currentMenuTab: 'overview',
+            currentMenuTab: overview,
             isManagementPopoverOpen: false,
             isSettingsPopoverOpen: false,
             isSecurityPopoverOpen: false,
@@ -565,27 +676,27 @@ export const WzMenu = withWindowSize(
     }
 
     onClickToolsButton() {
-      this.setMenuItem('wazuh-dev');
+      this.setMenuItem(wazuhDev);
       this.toolsPopoverToggle();
     }
 
     onClickSettingsButton() {
-      this.setMenuItem('settings');
+      this.setMenuItem(setting);
       this.settingsPopoverToggle();
     }
 
     onClickSecurityButton() {
-      this.setMenuItem('security');
+      this.setMenuItem(security);
       this.securityPopoverToggle();
     }
 
     onClickManagementButton() {
-      this.setMenuItem('manager');
+      this.setMenuItem(manager);
       this.managementPopoverToggle();
     }
 
     onClickOverviewButton() {
-      this.setMenuItem('overview');
+      this.setMenuItem(overview);
       this.overviewPopoverToggle();
     }
 
@@ -619,15 +730,15 @@ export const WzMenu = withWindowSize(
       const pluginPlatformMenuBlockedOrOpened =
         document.body.classList.contains('euiBody--collapsibleNavIsDocked') ||
         document.body.classList.contains('euiBody--collapsibleNavIsOpen');
-      if (!this.state.menuOpened && this.state.currentMenuTab === 'manager') {
+      if (!this.state.menuOpened && this.state.currentMenuTab === manager) {
         this.managementPopoverToggle();
-      } else if (this.state.currentMenuTab === 'overview') {
+      } else if (this.state.currentMenuTab === overview) {
         this.overviewPopoverToggle();
-      } else if (this.state.currentMenuTab === 'wazuh-dev') {
+      } else if (this.state.currentMenuTab === wazuhDev) {
         this.toolsPopoverToggle();
-      } else if (this.state.currentMenuTab === 'settings') {
+      } else if (this.state.currentMenuTab === setting) {
         this.settingsPopoverToggle();
-      } else if (this.state.currentMenuTab === 'security') {
+      } else if (this.state.currentMenuTab === security) {
         this.securityPopoverToggle();
       } else {
         this.closeAllPopover();
@@ -686,7 +797,14 @@ export const WzMenu = withWindowSize(
       return (
         <>
           <EuiFlexItem grow={this.showSelectorsInPopover}>
-            <p>API</p>
+            <p>
+              {i18n.translate(
+                'wazuh.public.components.wz.menu.management.API',
+                {
+                  defaultMessage: 'API',
+                },
+              )}
+            </p>
           </EuiFlexItem>
           <EuiFlexItem grow={this.showSelectorsInPopover}>
             <div style={style}>
@@ -698,7 +816,7 @@ export const WzMenu = withWindowSize(
                 })}
                 value={this.state.currentAPI}
                 onChange={this.changeAPI}
-                aria-label='API selector'
+                aria-label={selectorAPI}
               />
             </div>
           </EuiFlexItem>
@@ -715,7 +833,14 @@ export const WzMenu = withWindowSize(
       return (
         <>
           <EuiFlexItem grow={this.showSelectorsInPopover}>
-            <p>Index pattern</p>
+            <p>
+              {i18n.translate(
+                'wazuh.public.components.wz.menu.management.indexPattern',
+                {
+                  defaultMessage: 'Index pattern',
+                },
+              )}
+            </p>
           </EuiFlexItem>
 
           <EuiFlexItem grow={this.showSelectorsInPopover}>
@@ -728,7 +853,7 @@ export const WzMenu = withWindowSize(
                 })}
                 value={this.state.currentSelectedPattern}
                 onChange={this.changePattern}
-                aria-label='Index pattern selector'
+                aria-label={indexPatternSelector}
               />
             </div>
           </EuiFlexItem>
@@ -756,21 +881,28 @@ export const WzMenu = withWindowSize(
               <EuiButtonEmpty
                 data-test-subj='menuModulesButton'
                 onMouseEnter={() => {
-                  this.setState({ hover: 'overview' });
+                  this.setState({ hover: overview });
                 }}
                 className={
                   'wz-menu-button ' +
                   ((this.state.currentMenuTab === 'overview' &&
                     !this.isAnyPopoverOpen()) ||
                   this.state.isOverviewPopoverOpen
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
                 onClick={this.onClickOverviewButton.bind(this)}
               >
                 <EuiIcon type='visualizeApp' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Modules</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.modules',
+                    {
+                      defaultMessage: 'Modules',
+                    },
+                  )}
+                </span>
                 <span className='flex'></span>
                 <span className='flex'></span>
                 {
@@ -784,21 +916,28 @@ export const WzMenu = withWindowSize(
               <EuiButtonEmpty
                 data-test-subj='menuManagementButton'
                 onMouseEnter={() => {
-                  this.setState({ hover: 'manager' });
+                  this.setState({ hover: manager });
                 }}
                 className={
                   'wz-menu-button ' +
-                  ((this.state.currentMenuTab === 'manager' &&
+                  ((this.state.currentMenuTab === manager &&
                     !this.isAnyPopoverOpen()) ||
                   this.state.isManagementPopoverOpen
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
                 onClick={this.onClickManagementButton.bind(this)}
               >
                 <EuiIcon type='managementApp' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Management</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.Management',
+                    {
+                      defaultMessage: 'Management',
+                    },
+                  )}
+                </span>
                 <span className='flex'></span>
                 {
                   /*this.state.hover === 'manager' */ this.state
@@ -812,37 +951,51 @@ export const WzMenu = withWindowSize(
                 data-test-subj='menuAgentsButton'
                 className={
                   'wz-menu-button ' +
-                  (this.state.currentMenuTab === 'agents-preview' &&
+                  (this.state.currentMenuTab === agentsPreview &&
                   !this.isAnyPopoverOpen()
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
                 href='#/agents-preview'
                 onClick={() => {
-                  this.setMenuItem('agents-preview');
+                  this.setMenuItem(agentsPreview);
                   this.setState({ menuOpened: false });
                 }}
               >
                 <EuiIcon type='watchesApp' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Agents</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.agents',
+                    {
+                      defaultMessage: 'Agents',
+                    },
+                  )}
+                </span>
               </EuiButtonEmpty>
 
               <EuiButtonEmpty
                 data-test-subj='menuToolsButton'
                 className={
                   'wz-menu-button ' +
-                  ((this.state.currentMenuTab === 'wazuh-dev' &&
+                  ((this.state.currentMenuTab === wazuhDev &&
                     !this.isAnyPopoverOpen()) ||
                   this.state.isToolsPopoverOpen
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
                 onClick={this.onClickToolsButton.bind(this)}
               >
                 <EuiIcon type='console' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Tools</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.tools',
+                    {
+                      defaultMessage: 'Tools',
+                    },
+                  )}
+                </span>
                 <span className='flex'></span>
                 {this.state.isToolsPopoverOpen && (
                   <EuiIcon color='subdued' type='arrowRight' />
@@ -854,18 +1007,25 @@ export const WzMenu = withWindowSize(
                 data-test-subj='menuSecurityButton'
                 className={
                   'wz-menu-button ' +
-                  ((this.state.currentMenuTab === 'security' &&
+                  ((this.state.currentMenuTab === security &&
                     !this.isAnyPopoverOpen()) ||
                   this.state.isSecurityPopoverOpen
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
-                aria-label='Security'
+                aria-label={security}
                 onClick={this.onClickSecurityButton.bind(this)}
               >
                 <EuiIcon type='securityApp' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Security</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.security',
+                    {
+                      defaultMessage: 'Security',
+                    },
+                  )}
+                </span>
                 <span className='flex'></span>
                 {this.state.isSecurityPopoverOpen && (
                   <EuiIcon color='subdued' type='arrowRight' />
@@ -875,10 +1035,10 @@ export const WzMenu = withWindowSize(
                 data-test-subj='menuSettingsButton'
                 className={
                   'wz-menu-button ' +
-                  ((this.state.currentMenuTab === 'settings' &&
+                  ((this.state.currentMenuTab === setting &&
                     !this.isAnyPopoverOpen()) ||
                   this.state.isSettingsPopoverOpen
-                    ? 'wz-menu-active'
+                    ? wzMenuActive
                     : '')
                 }
                 color='text'
@@ -886,7 +1046,14 @@ export const WzMenu = withWindowSize(
                 onClick={this.onClickSettingsButton.bind(this)}
               >
                 <EuiIcon type='advancedSettingsApp' color='primary' size='m' />
-                <span className='wz-menu-button-title '>Settings</span>
+                <span className='wz-menu-button-title '>
+                  {i18n.translate(
+                    'wazuh.public.components.wz.menu.management.settings',
+                    {
+                      defaultMessage: 'Settings',
+                    },
+                  )}
+                </span>
                 <span className='flex'></span>
                 {this.state.isSettingsPopoverOpen && (
                   <EuiIcon color='subdued' type='arrowRight' />
@@ -950,7 +1117,7 @@ export const WzMenu = withWindowSize(
                     <EuiFlexItem grow={false} style={{ margin: '12px 0 0 0' }}>
                       <EuiToolTip
                         position='top'
-                        content={`Open ${currentAgent.name} summary`}
+                        content={`${open11} ${currentAgent.name} ${summary}`}
                       >
                         <EuiButtonEmpty
                           color='primary'
@@ -972,10 +1139,7 @@ export const WzMenu = withWindowSize(
                       </EuiToolTip>
                     </EuiFlexItem>
                     <EuiFlexItem grow={false} style={{ margin: '12px 0 0 0' }}>
-                      <EuiToolTip
-                        position='top'
-                        content={'Change selected agent'}
-                      >
+                      <EuiToolTip position='top' content={changeSelectedAgent}>
                         <EuiButtonEmpty
                           color='primary'
                           onClick={() => {
@@ -991,7 +1155,7 @@ export const WzMenu = withWindowSize(
                       grow={false}
                       style={{ margin: '12px 16px 0 0' }}
                     >
-                      <EuiToolTip position='top' content={'Unpin agent'}>
+                      <EuiToolTip position='top' content={unpinAgent}>
                         <EuiButtonEmpty
                           color='text'
                           onClick={() => {
@@ -1051,14 +1215,14 @@ export const WzMenu = withWindowSize(
       );
 
       const openSelectorsButton = (
-        <EuiToolTip position='bottom' content='Show selectors'>
+        <EuiToolTip position='bottom' content={showSelector}>
           <EuiButtonEmpty
             iconType='boxesVertical'
             iconSide='right'
             style={{ position: 'relative', right: 0 }}
             onClick={() => this.switchSelectorsPopOver()}
             size='s'
-            aria-label='Open selectors'
+            aria-label={openSelector}
           ></EuiButtonEmpty>
         </EuiToolTip>
       );
