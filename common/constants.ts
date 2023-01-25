@@ -19,9 +19,6 @@ const title1 = i18n.translate('wazuh.common.constant.title1', {
 const title2 = i18n.translate('wazuh.common.constant.title2', {
   defaultMessage: 'wazuh-alerts-',
 });
-const title3 = i18n.translate('wazuh.common.constant.title3', {
-  defaultMessage: 'wazuh-alerts-*',
-});
 const title4 = i18n.translate('wazuh.common.constant.title4', {
   defaultMessage: 'monitoring',
 });
@@ -36,9 +33,6 @@ const title7 = i18n.translate('wazuh.common.constant.title7', {
 });
 const title8 = i18n.translate('wazuh.common.constant.title8', {
   defaultMessage: 'statistics',
-});
-const title9 = i18n.translate('wazuh.common.constant.title9', {
-  defaultMessage: 'wazuh',
 });
 const title10 = i18n.translate('wazuh.common.constant.title10', {
   defaultMessage: 'wazuh-kibana',
@@ -65,7 +59,7 @@ export const PLUGIN_VERSION_SHORT = version.split('.').splice(0, 2).join('.');
 // Index patterns - Wazuh alerts
 export const WAZUH_INDEX_TYPE_ALERTS = title1;
 export const WAZUH_ALERTS_PREFIX = title2;
-export const WAZUH_ALERTS_PATTERN = title3;
+export const WAZUH_ALERTS_PATTERN = 'wazuh-alerts-*';
 
 // Job - Wazuh monitoring
 export const WAZUH_INDEX_TYPE_MONITORING = title4;
@@ -81,7 +75,7 @@ export const WAZUH_MONITORING_DEFAULT_CRON_FREQ = '0 * * * * *';
 
 // Job - Wazuh statistics
 export const WAZUH_INDEX_TYPE_STATISTICS = title8;
-export const WAZUH_STATISTICS_DEFAULT_PREFIX = title9;
+export const WAZUH_STATISTICS_DEFAULT_PREFIX = 'wazuh';
 export const WAZUH_STATISTICS_DEFAULT_NAME = title8;
 export const WAZUH_STATISTICS_PATTERN = `${WAZUH_STATISTICS_DEFAULT_PREFIX}-${WAZUH_STATISTICS_DEFAULT_NAME}-*`;
 export const WAZUH_STATISTICS_TEMPLATE_NAME = `${WAZUH_STATISTICS_DEFAULT_PREFIX}-${WAZUH_STATISTICS_DEFAULT_NAME}`;
@@ -200,18 +194,7 @@ export const WAZUH_DATA_CONFIG_REGISTRY_PATH = path.join(
   WAZUH_DATA_CONFIG_DIRECTORY_PATH,
   'wazuh-registry.json',
 );
-const max_buckets = i18n.translate(
-  'wazuh.common.constants.plugins.max_buckets',
-  {
-    defaultMessage: 'timelion:max_buckets',
-  },
-);
-const timeDefaults = i18n.translate(
-  'wazuh.common.constants.plugins.timeDefaults',
-  {
-    defaultMessage: 'timepicker:timeDefaults',
-  },
-);
+
 // Wazuh data path - logs
 export const MAX_MB_LOG_FILES = 100;
 export const WAZUH_DATA_LOGS_DIRECTORY_PATH = path.join(
@@ -404,20 +387,16 @@ export const WAZUH_PLUGIN_PLATFORM_SETTING_TIME_FILTER = {
   from: 'now-24h',
   to: 'now',
 };
-export const PLUGIN_PLATFORM_SETTING_NAME_TIME_FILTER = timeDefaults;
+export const PLUGIN_PLATFORM_SETTING_NAME_TIME_FILTER =
+  'timepicker:timeDefaults';
 
 // Default maxBuckets set by the app
 export const WAZUH_PLUGIN_PLATFORM_SETTING_MAX_BUCKETS = 200000;
-export const PLUGIN_PLATFORM_SETTING_NAME_MAX_BUCKETS = max_buckets;
+export const PLUGIN_PLATFORM_SETTING_NAME_MAX_BUCKETS = 'timelion:max_buckets';
 
 // Default metaFields set by the app
 export const WAZUH_PLUGIN_PLATFORM_SETTING_METAFIELDS = ['_source', '_index'];
-export const PLUGIN_PLATFORM_SETTING_NAME_METAFIELDS = i18n.translate(
-  'wazuh.common.constant.metaFieldsText',
-  {
-    defaultMessage: 'metaFields',
-  },
-);
+export const PLUGIN_PLATFORM_SETTING_NAME_METAFIELDS = 'metaFields';
 
 // Logger
 export const UI_LOGGER_LEVELS = {
